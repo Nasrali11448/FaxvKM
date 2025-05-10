@@ -1,5 +1,7 @@
 if queue_on_teleport then
     queue_on_teleport([[
+        print = function() end
+        warn = function() end
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Nasrali11448/FaxvKM/refs/heads/main/Farm"))()
     ]])
 end
