@@ -6,6 +6,9 @@ if queue_on_teleport then
     ]])
 end
 
+        print = function() end
+        warn = function() end
+
 --[[
           ...                               .---:                                                                                             
          .%%%-                             *%%%#*                                                 :===                                        
