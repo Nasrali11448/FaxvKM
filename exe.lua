@@ -1,5 +1,7 @@
 repeat task.wait() until game:IsLoaded()
 
+local executescript = require 'patches/PatchReadClipboard'
+
 local gui = Instance.new("ScreenGui", game:GetService("CoreGui"))
 gui.ResetOnSpawn = false
 
@@ -33,9 +35,5 @@ button.TextSize = 18
 button.Text = "Execute"
 
 button.MouseButton1Click:Connect(function()
-	local input = textbox.Text
-	local matched = string.match(input, [[print%s*%(%s*["'](.-)["']%s*%)]])
-	if matched then
-		print(matched)
-	end
+	executescript(textbox.Text)
 end)
