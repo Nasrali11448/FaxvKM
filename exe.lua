@@ -1,5 +1,35 @@
 repeat task.wait() until game:IsLoaded()
 
+local null = nil
+local modules = {}
+
+modules['patches/PatchReadClipboard'] = {}
+modules['patches/PatchReadClipboard'].load = function()
+    return function(script)
+        loadstring(script)()
+    end
+end
+modules['patches/PatchReadClipboard.lua'] = modules['patches/PatchReadClipboard']
+
+local require = function(...)
+    local requested, returned = { ... }, {}
+    for _, filepath in pairs(requested) do
+        if not modules[filepath] then
+            error('[flux bundler] no such module \'' .. filepath .. '\'')
+        end
+        local module = modules[filepath]
+        if module.isCached then
+            table.insert(returned, module.cache)
+        else
+            local moduleValue = module.load()
+            module.cache = moduleValue
+            module.isCached = true
+            table.insert(returned, module.cache)
+        end
+    end
+    return table.unpack(returned)
+end
+
 local executescript = require 'patches/PatchReadClipboard'
 
 local gui = Instance.new("ScreenGui", game:GetService("CoreGui"))
@@ -35,5 +65,5 @@ button.TextSize = 18
 button.Text = "Execute"
 
 button.MouseButton1Click:Connect(function()
-	executescript(textbox.Text)
+    executescript(textbox.Text)
 end)
