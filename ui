@@ -1,3 +1,5 @@
+print("test loaded")
+
 
 if FLUX_ID == "db4701c676797797d49f327174873408cab79da46a315b72d3643cb830e050fe4b9f779e7750389d26da5a5156f9a36d" 
 or FLUX_ID == "48bceadda325229ddf4750817d2334dd0908f4a0557e89f08aef2559f4d99d9cbd7312886770246fd57012aaf48c3a50" 
@@ -5,7 +7,6 @@ or string.find(FLUX_ID, "punkteam")
 then
     getgenv().FLUX_ID = "cracked";
     
---game:GetService("Players").LocalPlayer:Kick("Using keyless / cracked versions / Punk Team Versions of Fluxus will get you banned from using Fluxus. Only use official releases of Fluxus.");
 end
 
 if BUILD_ID == nil then
@@ -118,8 +119,6 @@ local res, error = pcall(function()
               VirtualInputManager:SendMouseButtonEvent(x, y, button, isDown, currentWindow, 0)
           end
 
-          function VirtualInput.SendKeyEvent(isPressed, keyCode, isRepeated)
-              VirtualInputManager:SendKeyEvent(isPressed, keyCode, isRepeated, currentWindow)
           end
 
           function VirtualInput.SendMouseMoveEvent(x, y)
@@ -226,17 +225,10 @@ local res, error = pcall(function()
               VirtualInput.sendMouseButtonEvent(vec2.x, vec2.y, 1, false)
           end
 
-          function VirtualInput.pressKey(keyCode)
-              VirtualInput.SendKeyEvent(true, keyCode, false)
           end
 
-          function VirtualInput.releaseKey(keyCode)
-              VirtualInput.SendKeyEvent(false, keyCode, false)
           end
 
-          function VirtualInput.hitKey(keyCode)
-              VirtualInput.pressKey(keyCode)
-              VirtualInput.releaseKey(keyCode)
           end
 
           function VirtualInput.mouseMove(vec2)
@@ -248,10 +240,8 @@ local res, error = pcall(function()
           end
 
           function nametoenum(name)
-              return Enum.KeyCode[name] 
           end
 
-          local KeyCodes = 
           {
               [0x08] = nametoenum("Backspace");
               [0x09] = nametoenum("Tab");
@@ -315,16 +305,6 @@ local res, error = pcall(function()
               [0x5A] = nametoenum("Z");
               [0x5B] = nametoenum("LeftSuper");
               [0x5C] = nametoenum("RightSuper");
-              [0x60] = nametoenum("KeypadZero");
-              [0x61] = nametoenum("KeypadOne");
-              [0x62] = nametoenum("KeypadTwo");
-              [0x63] = nametoenum("KeypadThree");
-              [0x64] = nametoenum("KeypadFour");
-              [0x65] = nametoenum("KeypadFive");
-              [0x66] = nametoenum("KeypadSix");
-              [0x67] = nametoenum("KeypadSeven");
-              [0x68] = nametoenum("KeypadEight");
-              [0x69] = nametoenum("KeypadNine");
               [0x6A] = nametoenum("Asterisk");
               [0x6B] = nametoenum("Plus");
               [0x6D] = nametoenum("Minus");
@@ -357,14 +337,11 @@ local res, error = pcall(function()
               [0xDD] = nametoenum("RightBracket");
           }
 
-          function get_keycode(key)
-              local x = KeyCodes[key]
 
               if x then
                   return x
               end
 
-              return Enum.KeyCode.Unknown
           end
 
           getgenv().isrbxactive = function()
@@ -374,23 +351,11 @@ local res, error = pcall(function()
           getgenv().iswindowactive = isrbxactive
           getgenv().isgameactive = isrbxactive
 
-          getgenv().keypress = newcclosure(function(keyCode)
-              if (typeof(keyCode) == "string") then
-                  VirtualInput.pressKey(get_keycode(tonumber(keyCode)))
-              elseif (typeof(keyCode) == "number") then
-                  VirtualInput.pressKey(get_keycode(keyCode))
               else
-                  VirtualInput.pressKey(keyCode)
               end
           end)
 
-          getgenv().keyrelease = newcclosure(function(keyCode)
-              if (typeof(keyCode) == "string") then
-                  VirtualInput.releaseKey(get_keycode(tonumber(keyCode)))
-              elseif (typeof(keyCode) == "number") then
-                  VirtualInput.releaseKey(get_keycode(keyCode))
               else
-                  VirtualInput.releaseKey(keyCode)
               end
           end)
 
@@ -458,21 +423,14 @@ local res, error = pcall(function()
               end
           end
 
-    function key_press(x)
         if type(x) ~= "number" then
-            error("Bad argument (#1) to Input.KeyPress, expected number");
         end
 
-        keypress(x)
-        keyrelease(x);
     end
 
     getgenv().Input = {
         LeftClick = left_click;
         RightClick = right_click;
-        KeyPress = key_press;
-        KeyDown = keypress;
-        KeyUp = keyrelease;
     }
 
     setreadonly(Input, true)
@@ -684,7 +642,6 @@ if name == "Delta" then
 
     
     --wait(1);
-    --loadstring(game:HttpGet("https://raw.githubusercontent.com/lxnnydev/DeltaAndroid/main/keysys.lua"))()
     
     --return;
 elseif name == "Codex" then
@@ -867,12 +824,9 @@ end
 debug 'checkauth'
 -- if auth failed, register events & show prompt
 if not IsSuccessfulAuth then
-  debug 'transitiontolekey'
-  ui.TransitionToUIFrame 'Key'
   debug 'showleks'
   ui.KSShowBtn ''
   debug 'ruic'
-  ui.RegisterGetKeyClick(function()
     if FLUX_ID ~= nil then
         setclipboard("https://flux.li/android/external/start.php?HWID="..FLUX_ID);
     else
@@ -881,17 +835,11 @@ if not IsSuccessfulAuth then
     -- the below line is curtosey of showerheadfd's code & it features 6 indexes
     
     local discord = game:HttpGet("https://flux.li/android/external/discord.php?android=true&id="..tostring(FLUX_ID))
-    ui.UIFrames.Key.Container.KeyContainer.Instructions.Text = _G.fluxus_ui_values["key_copied"]..discord
   end)
   debug 'rvkc'
-  ui.RegisterValidateKeyClick(function(key)
-    if auth.Keyed.ValidateKey(key) then
       ui.KSHideBtn ''
-      ui.PrepareTransition 'Key'
       CompleteUI()
     else
-      ui.UIFrames.Key.Container.KeyContainer.Instructions.Text =
-        'Your key was incorrect!<br/>Please try getting a new key. If this issue persists, contact support.'
     end
   end)
 else
@@ -907,36 +855,25 @@ modules['index.lua'].isCached = false;
 
 ----
 
-modules['auth/HandleKeyedAuthentication.lua'] = {};
-modules['auth/HandleKeyedAuthentication.lua'].load = function()
--- Simple API for Key-based Authentication
 return {
-  ['ValidateKey'] = function(key)
-    if type(key) ~= 'string' then
       error 'Failed to auth'
     end
 
-    local ret = authvf(key, game:GetService('Players').LocalPlayer.Name)
     if ret then
-      writefile('.fluxus-auth-store', key)
     end
     return ret
   end,
 }
 
 end;
-modules['auth/HandleKeyedAuthentication.lua'].cache = null;
-modules['auth/HandleKeyedAuthentication.lua'].isCached = false;
 
 ----
 
 modules['auth/index.lua'] = {};
 modules['auth/index.lua'].load = function()
 local auth = {
-  ['Keyed'] = require 'auth/HandleKeyedAuthentication',
 }
 auth['TryAuthenticate'] = function() -- pre-ui-validation, if this function returns true, the auth ui prompt is skipped.
-  if _testKeySystem then
     return false
   end
   if authvf('', game:GetService('Players').LocalPlayer.Name) then
@@ -1414,23 +1351,17 @@ modules['lib/json.lua'] = {};
 modules['lib/json.lua'].load = function()
 --[[ json.lua
 
-A compact pure-Lua JSON library.
 The main functions are: json.stringify, json.parse.
 
 ## json.stringify:
 
 This expects the following to be true of any tables being encoded:
- * They only have string or number keys. Number keys must be represented as
    strings in json; this is part of the json spec.
  * They are not recursive. Such a structure cannot be specified in json.
 
-A Lua table is considered to be an array if and only if its set of keys is a
 consecutive sequence of positive integers starting at 1. Arrays are encoded like
 so: `[2, 3, false, "hi"]`. Any other type of Lua table is encoded as a json
-object, encoded like so: `{"key1": 2, "key2": false}`.
 
-Because the Lua nil value cannot be a key, and as a table value is considerd
-equivalent to a missing key, there is no way to express the json "null" value in
 a Lua table. The only way this will output "null" is if your entire input obj is
 nil itself.
 
@@ -1448,7 +1379,6 @@ This function parses json, with the exception that it does not pay attention to
 \u-escaped unicode code points in strings.
 
 It is difficult for Lua to return null as a value. In order to prevent the loss
-of keys with a null value in a json string, this function uses the one-off
 table value json.null (which is just an empty table) to indicate null values.
 This way you can check if a value is null with the conditional
 `val == json.null`.
@@ -1459,7 +1389,6 @@ avoiding null values in your data to begin with.
 --]]
 
 -- Minified variant of https://gist.githubusercontent.com/tylerneylon/59f4bcf316be525b30ab/raw/7f69cc2cea38bf68298ed3dbfc39d197d53c80de/json.lua
-local a={}local function b(c)if type(c)~='table'then return type(c)end;local d=1;for e in pairs(c)do if c[d]~=nil then d=d+1 else return'table'end end;if d==1 then return'table'else return'array'end end;local function f(g)local h={'\\','"','/','\b','\f','\n','\r','\t'}local i={'\\','"','/','b','f','n','r','t'}for d,j in ipairs(h)do g=g:gsub(j,'\\'..i[d])end;return g end;local function k(l,m,n,o)m=m+#l:match('^%s*',m)if l:sub(m,m)~=n then if o then error('Expected '..n..' near position '..m)end;return m,false end;return m+1,true end;local function p(l,m,q)q=q or''local r='End of input found while parsing string.'if m>#l then error(r)end;local j=l:sub(m,m)if j=='"'then return q,m+1 end;if j~='\\'then return p(l,m+1,q..j)end;local s={b='\b',f='\f',n='\n',r='\r',t='\t'}local t=l:sub(m+1,m+1)if not t then error(r)end;return p(l,m+2,q..(s[t]or t))end;local function u(l,m)local v=l:match('^-?%d+%.?%d*[eE]?[+-]?%d*',m)local q=tonumber(v)if not q then error('Error parsing number at position '..m..'.')end;return q,m+#v end;function a.stringify(c,w)local g={}local x=b(c)if x=='array'then if w then error'Can\'t encode array as key.'end;g[#g+1]='['for d,q in ipairs(c)do if d>1 then g[#g+1]=', 'end;g[#g+1]=a.stringify(q)end;g[#g+1]=']'elseif x=='table'then if w then error'Can\'t encode table as key.'end;g[#g+1]='{'for y,z in pairs(c)do if#g>1 then g[#g+1]=', 'end;g[#g+1]=a.stringify(y,true)g[#g+1]=':'g[#g+1]=a.stringify(z)end;g[#g+1]='}'elseif x=='string'then return'"'..f(c)..'"'elseif x=='number'then if w then return'"'..tostring(c)..'"'end;return tostring(c)elseif x=='boolean'then return tostring(c)elseif x=='nil'then return'null'elseif x =='function' then return 'null' else error('Unjsonifiable type: '..x..'.')end;return table.concat(g)end;a.null={}function a.parse(l,m,A)m=m or 1;if m>#l then error'Reached unexpected end of input.'end;local m=m+#l:match('^%s*',m)local B=l:sub(m,m)if B=='{'then local c,C,D={},true,true;m=m+1;while true do C,m=a.parse(l,m,'}')if C==nil then return c,m end;if not D then error'Comma missing between object items.'end;m=k(l,m,':',true)c[C],m=a.parse(l,m)m,D=k(l,m,',')end elseif B=='['then local E,q,D={},true,true;m=m+1;while true do q,m=a.parse(l,m,']')if q==nil then return E,m end;if not D then error'Comma missing between array items.'end;E[#E+1]=q;m,D=k(l,m,',')end elseif B=='"'then return p(l,m+1)elseif B=='-'or B:match'%d'then return u(l,m)elseif B==A then return nil,m+1 else local F={['true']=true,['false']=false,['null']=a.null}for G,H in pairs(F)do local I=m+#G-1;if l:sub(m,I)==G then return H,I+1 end end;local J='position '..m..': '..l:sub(m,m+10)error('Invalid json syntax starting at '..J)end end;return a
 
 end;
 modules['lib/json.lua'].cache = null;
@@ -1565,9 +1494,7 @@ API = {
     return s
   end,
 }
-getgenv().cfgapi = API
 getgenv().Cfg = API
-getgenv().cfg_api = API
 return API
 
 end;
@@ -1594,8 +1521,6 @@ modules['lib/scriptblox/index.lua'].isCached = false;
 
 modules['lib/scriptblox/search.lua'] = {};
 modules['lib/scriptblox/search.lua'].load = function()
--- scriptblox api schema for https://scriptblox.com/api/script/search?q=%s&max=%s&mode=%s
--- result: // no, this isnt for formatting, its the actual key
 --   totalPages: int16 // might be more, however its not gonna be above that, should honestly be interpereted as an int8 & anything beyond it should be dismissed - this is lua though
 --   scripts: script[]
 --     - _id: string
@@ -1619,8 +1544,6 @@ modules['lib/scriptblox/search.lua'].load = function()
 --       script: string // push this to the queue on exec
 --       matched: string[] // list of matched features
 
-local endpoint = 'https://scriptblox.com/api/script/search?q=%s%s&mode=free'
-local queryEndpoint = 'https://scriptblox.com/api/script/%s'
 
 local j = require 'lib/json'
 
@@ -1633,7 +1556,6 @@ return function(q, mx)
   -- transform input
   q = string.gsub(q, ' ', '+')
   mx = mx and string.format('&max=%s', tostring(mx)) or ''
-  -- make api call
   local responseRaw = game:HttpGetAsync(string.format(endpoint, q, mx))
   -- parse
   local parsed = j.parse(responseRaw)
@@ -2037,9 +1959,7 @@ return function()
     end)
     local doSearch = function(query, deep)
       -- get results
-      local apiresults = nil;
       local s,e = pcall(function()
-          apiresults = ScriptBlox.Search(query, 60).result.scripts
       end)
       if s == false then
         return;
@@ -2059,7 +1979,6 @@ return function()
         '-- @supports-fluxus-android',
         '-- @supports-mobile-ui',
       }
-      for idx, res in pairs(apiresults) do
         local cat = 32
         -- supports fluxus android = prioritize by 3
         for _, o in pairs(androidMatches) do
@@ -2229,7 +2148,6 @@ return function()
       require 'lib/ui/CreateHistoryUI'()
     end
   end
-  local t = UI.UIFrames.ToggleBtn
   local MinimizePos, MinimizeAnchor = t.Position, t.AnchorPoint
   local SetUseCenteredMinimize = function(v)
     if v then
@@ -2307,7 +2225,6 @@ local a = require('asset-obj')
 local Global_Image = nil;
 local Global_Button_Color = Color3.fromRGB(141, 115, 176)
 local Global_Text_Color = Color3.fromRGB(255, 255, 255)
-local Global_Tabs_Color = Color3.fromRGB(30, 32, 48)
 local Global_Editor_Color = Color3.fromRGB(24, 25, 38);
 local Global_Editor_Transparent = false;
 
@@ -2315,18 +2232,11 @@ local Global_Editor_Transparent = false;
 
 _G.fluxus_ui_values = 
 {
-  -- Key Section
 
-  ["key_instructions"] = 'Welcome to Fluxus Android!<br/>Please click \'Get Key\' to get a key.<br/>Once you\'ve completed the key system, enter your key below, then click \'Check Key\'',
-  ["key_paste_key_here"] = 'Paste your key here',
-  ["key_get_key"] = 'Get Key',
-  ["key_check_key"] = 'Check Key',
-  ["key_copied"] = 'Welcome to Fluxus Android!<br/>The key link was copied to your clipboard - Please open it in a browser.<br/>Need help? Join discord.gg/',
 
   -- Main UI
 
   ["welcome_text"] = '<font size="24">Hello and Welcome to Fluxus Android!</font><br/>Enter your script or use the games tab on the left',
-  ["execute_from_textbox"] = 'Execute from Textbox',
   ["execute_from_clipboard"] = 'Execute from Clipboard',
   ["credits"] = 'Fluxus Android made by:<br/>- ShowerHeadFD<br/>- Rev<br/>- YieldingExploiter<br/><br/><i>Scripts tab powered by Scriptblox.com</i><br/>Discover more products at <i>flux.li</i>';
 
@@ -2345,7 +2255,6 @@ _G.fluxus_ui_values =
   ["fastanim"] = 'Fast Animations',
   ["noanim"] = 'No Animations',
   ["scripthistory"] = 'Script History',
-  ["purchaseprotections"] = 'Toggle Purchase Protections',
 }
 
 local LocalizationService = game:GetService("LocalizationService")
@@ -2357,11 +2266,6 @@ end)
 
 if result then
     if code == "PR" or code == "BR" or code == "CV" or code == "AO" or code == "MZ" then
-      _G.fluxus_ui_values["key_instructions"] = 'Bem-vindo ao Fluxus Android!<br/>Por favor, pressione \'Obter chave\' para obter uma chave.<br/>Depois de terminar o sistema de chave, pressione \'Verify Key\'';
-      _G.fluxus_ui_values["key_paste_key_here"] = 'Cole sua chave aqui';
-      _G.fluxus_ui_values["key_get_key"] = 'Obter chave';
-      _G.fluxus_ui_values["key_check_key"] = 'Verificar chave';
-      _G.fluxus_ui_values["key_copied"] = 'Bem-vindo ao Fluxus Android!<br/>O link da chave foi copiado! Abra-o em um navegador como o Google.<br/>Preciso de ajuda? Junte-se ao nosso Discord discord.gg/';
 
       _G.fluxus_ui_values["welcome_text"] = '<font size="24">OlÃ¡ e bem-vindo ao Fluxus Android!</font><br/>Digite seu script ou use a aba de jogos Ã  esquerda';
       _G.fluxus_ui_values["execute_from_textbox"] = 'Executar script da caixa de texto';
@@ -2381,11 +2285,6 @@ if result then
       _G.fluxus_ui_values["scripthistory"] = 'HistÃ³ria do script';
       _G.fluxus_ui_values["purchaseprotections"] = 'Alternar proteções de compra';
     elseif code == "RU" then
-      _G.fluxus_ui_values["key_instructions"] = 'Ð”Ð¾Ð±Ñ€Ð¾ Ð¿Ð¾Ð¶Ð°Ð»Ð¾Ð²Ð°Ñ‚ÑŒ Ð² Fluxus Android!<br/>ÐŸÐ¾Ð¶Ð°Ð»ÑƒÐ¹ÑÑ‚Ð°, Ð½Ð°Ð¶Ð¼Ð¸Ñ‚Ðµ \'ÐŸÐ¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ ÐºÐ»ÑŽÑ‡\', Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ ÐºÐ»ÑŽÑ‡.<br/>ÐŸÐ¾ÑÐ»Ðµ Ð·Ð°Ð²ÐµÑ€ÑˆÐµÐ½Ð¸Ñ ÑÐ¸ÑÑ‚ÐµÐ¼Ñ‹ ÐºÐ»ÑŽÑ‡ÐµÐ¹ Ð²Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÑÐ²Ð¾Ð¹ ÐºÐ»ÑŽÑ‡ Ð½Ð¸Ð¶Ðµ, Ð·Ð°Ñ‚ÐµÐ¼ Ð½Ð°Ð¶Ð¼Ð¸Ñ‚Ðµ \'ÐŸÑ€Ð¾Ð²ÐµÑ€Ð¸Ñ‚ÑŒ ÐºÐ»ÑŽÑ‡\'';
-      _G.fluxus_ui_values["key_paste_key_here"] = 'Ð’ÑÑ‚Ð°Ð²ÑŒÑ‚Ðµ ÑÑŽÐ´Ð° ÑÐ²Ð¾Ð¹ ÐºÐ»ÑŽÑ‡';
-      _G.fluxus_ui_values["key_get_key"] = 'ÐŸÐ¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ ÐºÐ»ÑŽÑ‡';
-      _G.fluxus_ui_values["key_check_key"] = 'ÐŸÑ€Ð¾Ð²ÐµÑ€Ð¸Ñ‚ÑŒ ÐºÐ»ÑŽÑ‡';
-      _G.fluxus_ui_values["key_copied"] = ' Ð”Ð¾Ð±Ñ€Ð¾ Ð¿Ð¾Ð¶Ð°Ð»Ð¾Ð²Ð°Ñ‚ÑŒ Ð² Fluxus Android!<br/>Ð¡ÑÑ‹Ð»ÐºÐ° Ð½Ð° ÐºÐ»ÑŽÑ‡ Ð±Ñ‹Ð»Ð° ÑÐºÐ¾Ð¿Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð° Ð² Ð±ÑƒÑ„ÐµÑ€ Ð¾Ð±Ð¼ÐµÐ½Ð°. ÐŸÐ¾Ð¶Ð°Ð»ÑƒÐ¹ÑÑ‚Ð°, Ð¾Ñ‚ÐºÑ€Ð¾Ð¹Ñ‚Ðµ ÐµÐµ Ð² Ð±Ñ€Ð°ÑƒÐ·ÐµÑ€Ðµ.<br/>ÐÑƒÐ¶Ð½Ð° Ð¿Ð¾Ð¼Ð¾Ñ‰ÑŒ? ÐŸÑ€Ð¸ÑÐ¾ÐµÐ´Ð¸Ð½ÑÐ¹Ñ‚ÐµÑÑŒ Ðº discord.gg/'; 
       
       _G.fluxus_ui_values["welcome_text"] = '<font size="24">Ð—Ð´Ñ€Ð°Ð²ÑÑ‚Ð²ÑƒÐ¹Ñ‚Ðµ Ð¸ Ð´Ð¾Ð±Ñ€Ð¾ Ð¿Ð¾Ð¶Ð°Ð»Ð¾Ð²Ð°Ñ‚ÑŒ Ð² Fluxus Android!</font><br/>Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÑÐ²Ð¾Ð¹ ÑÐºÑ€Ð¸Ð¿Ñ‚ Ð¸Ð»Ð¸ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐ¹Ñ‚Ðµ Ð²ÐºÐ»Ð°Ð´ÐºÑƒ Ð¸Ð³Ñ€ Ð½Ð° the left';
       _G.fluxus_ui_values["execute_from_textbox"] = 'Ð’Ñ‹Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÑŒ Ð¸Ð· Ñ‚ÐµÐºÑÑ‚Ð¾Ð²Ð¾Ð³Ð¾ Ð¿Ð¾Ð»Ñ';
@@ -2405,14 +2304,8 @@ if result then
       _G.fluxus_ui_values["scripthistory"] = 'Ð˜ÑÑ‚Ð¾Ñ€Ð¸Ñ ÑÑ†ÐµÐ½Ð°Ñ€Ð¸ÐµÐ²'; 
       _G.fluxus_ui_values["purchaseprotections"] = 'Переключение защиты покупок';
     elseif code == "HR" then
-      _G.fluxus_ui_values["key_instructions"] = 'DobrodoÅ¡li u Fluxus Android!<br/>Molim vas kliknite \'Dobij kljuÄ\' da dobite kljuÄ.<br/>Kada\ zavrÅ¡ite system za kljuÄ, upiÅ¡ite kljuÄ ispod, onda kliknite \'Provjeri KljuÄ\'';
-      _G.fluxus_ui_values["key_paste_key_here"] = 'Zaljepi svoj kljuÄ ovdje';
-      _G.fluxus_ui_values["key_get_key"] = 'Dobi kljuÄ';
-      _G.fluxus_ui_values["key_check_key"] = 'Provjeri kljuÄ';
-      _G.fluxus_ui_values["key_copied"] = 'DobrodoÅ¡li u Fluxus Android!<br/>Link za kljuÄ je bio kopiran - Molim vas ga otvorite u pregledniku.<br/>Trebate pomoÄ‡? Join discord.gg/';
         
       _G.fluxus_ui_values["welcome_text"] = '<font size="24">Bok i dobrodoÅ¡li u Fluxus Android!</font><br/>UpiÅ¡ite svoju skriptu ili koristite tab za igrice na lijevoj strani';
-      _G.fluxus_ui_values["execute_from_textbox"] = 'Execute from Textbox';
       _G.fluxus_ui_values["execute_from_clipboard"] = 'Execute from Clipboard';
       _G.fluxus_ui_values["credits"] = 'Fluxus Android je napravljen od:<br/>- ShowerHeadFD<br/>- Rev<br/>- YieldingExploiter<br/><br/><i>Tab za skripte omoguÄen od Scriptblox.com</i><br/>IstraÅ¾ite viÅ¡e proizvoda kod <i>flux.li</i>';
         
@@ -2429,11 +2322,6 @@ if result then
       _G.fluxus_ui_values["scripthistory"] = 'Povijest skripta';
       _G.fluxus_ui_values["purchaseprotections"] = 'Uključite zaštitu kupnje';
     elseif code == "NL" then
-      _G.fluxus_ui_values["key_instructions"] = 'Welkom bij Fluxus Android!<br/>Klik op \'Sleutel ophalen\' om een sleutel te krijgen.<br/>Zodra u het sleutelsysteem heeft voltooid, voert u hieronder uw sleutel in en klikt u op  \'Controle sleutel\'';
-      _G.fluxus_ui_values["key_paste_key_here"] = 'Plak hier uw sleutel';
-      _G.fluxus_ui_values["key_get_key"] = 'Sleutel ophalen';
-      _G.fluxus_ui_values["key_check_key"] = 'Sleutel controleren';
-      _G.fluxus_ui_values["key_copied"] = 'Welkom bij Fluxus Android!<br/>De sleutellink is naar uw klembord gekopieerd - open deze in een browser.<br/>Hulp nodig?  Word lid van discord.gg/';
       
       _G.fluxus_ui_values["welcome_text"] = '<font size="24">Hallo en welkom bij Fluxus Android!</font><br/>Voer je script in of gebruik het tabblad Games aan de linkerkant';
       _G.fluxus_ui_values["execute_from_textbox"] = 'Uitvoeren vanuit tekstvak';
@@ -2453,14 +2341,8 @@ if result then
       _G.fluxus_ui_values["scripthistory"] = 'Scriptgeschiedenis';
       _G.fluxus_ui_values["purchaseprotections"] = 'Aankoopbeveiliging in-/uitschakelen';
     elseif code == "VN" then
-      _G.fluxus_ui_values["key_instructions"] = 'ChÃ o má»«ng Ä‘áº¿n Fluxus trÃªn Android!<br/>Xin hÃ£y nháº¥n\'Láº¥y Key\' Äá»ƒ láº¥y key.<br/>Khi báº¡n\ Ä‘Ã£ lÃ m xong thÃ¬ nháº­p key cá»§a báº¡n á»Ÿ dÆ°á»›i, rá»“i nháº¥n \'Kiá»ƒm tra key \'';
-      _G.fluxus_ui_values["key_paste_key_here"] = 'DÃ¡n key cá»§a báº¡n á»Ÿ Ä‘Ã¢y';
-      _G.fluxus_ui_values["key_get_key"] = 'Láº¥y Key';
-      _G.fluxus_ui_values["key_check_key"] = 'Kiá»ƒm tra Key';
-      _G.fluxus_ui_values["key_copied"] = 'ChÃ o má»«ng Ä‘áº¿n Fluxus trÃªn Android!<br/>Link key Ä‘Ã£ Ä‘Æ°á»£c sao chÃ©p - Vui lÃ²ng dÃ¡n trÃªn trÃ¬nh duyá»‡t cá»§a báº¡n.<br/>Cáº§n giÃºp Ä‘á»¡?? VÃ o server discord.gg/';
         
       _G.fluxus_ui_values["welcome_text"] = '<font size="24">Xin chÃ o vÃ  chÃ o má»«ng Ä‘áº¿n Fluxus trÃªn Android</font><br/>Nháº­p mÃ£ cá»§a báº¡n hay lÃ  xá»­ dá»¥ng game tab á»Ÿ phÃ­a bÃªn trÃ¡i';
-      _G.fluxus_ui_values["execute_from_textbox"] = 'Execute tá»« Textbox';
       _G.fluxus_ui_values["execute_from_clipboard"] = 'Execute tá»« Clipboard';
       _G.fluxus_ui_values["credits"] = 'Fluxus Android Ä‘Æ°á»£c lÃ m bá»Ÿ:<br/>- ShowerHeadFD<br/>- Rev<br/>- YieldingExploiter<br/><br/><i>Scripts tab Ä‘Æ°á»£c há»— trá»£ tá»« Scriptblox.com</i><br/>TÃ¬m hiá»ƒu thÃªm nhiá»u sáº£n pháº©m á»Ÿ <i>flux.li</i>';
         
@@ -2475,13 +2357,7 @@ if result then
       _G.fluxus_ui_values["fastanim"] = 'áº¢nh Ä‘á»™ng nhanh';
       _G.fluxus_ui_values["noanim"] = 'KhÃ´ng áº£nh Ä‘á»™ng';
       _G.fluxus_ui_values["scripthistory"] = 'Lá»‹ch sá»­ script';
-      _G.fluxus_ui_values["purchaseprotections"] = 'Toggle Bảo vệ mua hàng';
     elseif code == "TR" then
-      _G.fluxus_ui_values["key_instructions"] = 'Fluxus Android\'e hoÅŸgeldiniz!<br/>Anahtar almak iÃ§in \'Anahtar Al\' butonuna tÄ±klayÄ±n.<br/>anahtar sistemini tamamladÄ±ktan sonra, anahtarÄ±nÄ±zÄ± aÅŸaÄŸÄ±ya girin, daha sonra \'AnahtarÄ± Kontrol Et\' butonuna tÄ±klayÄ±n.';
-      _G.fluxus_ui_values["key_paste_key_here"] = 'AnahtarÄ±nÄ±zÄ± buraya yapÄ±ÅŸtÄ±rÄ±n';
-      _G.fluxus_ui_values["key_get_key"] = 'Anahtar Al';
-      _G.fluxus_ui_values["key_check_key"] = 'AnahtarÄ± Kontrol Et';
-      _G.fluxus_ui_values["key_copied"] = 'Fluxus Android\'e hoÅŸgeldiniz!<br/>Anahtar linki panonuza kopyalandÄ±. LÃ¼tfen bir tarayÄ±cÄ±da aÃ§Ä±n.<br/>YardÄ±ma mÄ± ihtiyacÄ±nÄ±z var? discord.gg/';
 
       _G.fluxus_ui_values["welcome_text"] = '<font size="24">Merhaba, Fluxus Android\'e hoÅŸgeldiniz</font><br/>Komut dosyanÄ±zÄ± girin veya soldaki oyunlar sekmesini kullanÄ±n';
       _G.fluxus_ui_values["execute_from_textbox"] = 'Metin Kutusundan Execute et';
@@ -2501,14 +2377,8 @@ if result then
       _G.fluxus_ui_values["scripthistory"] = 'Script GeÃ§miÅŸi';
       _G.fluxus_ui_values["purchaseprotections"] = 'Satın Alma Korumalarını Aç/Kapat';
     elseif code == "RO" then
-      _G.fluxus_ui_values["key_instructions"] = 'Bun venit la Fluxus Android!<br/>Te rog apasa \'Obtine cheie\' pentru a obtine o cheie.<br/>O data ce ati finalizat sistemul de cheie, introduceti cheia mai jos, si apasati \'Verificare cheie\'';
-      _G.fluxus_ui_values["key_paste_key_here"] = 'Lipiti-va cheia aici!';
-      _G.fluxus_ui_values["key_get_key"] = 'Obtine cheie';
-      _G.fluxus_ui_values["key_check_key"] = 'Verifica cheie';
-      _G.fluxus_ui_values["key_copied"] = 'Bun venit la Fluxus Android!<br/>Linkul cheii a fost copiat in clipboard - Va rugam sa il deschideti intr-un browser.<br/>Nevoie de ajutor? Intrati in discord.gg/';
 
       _G.fluxus_ui_values["welcome_text"] = '<font size="24">Salut si bun venit la Fluxus Android!</font><br/>Introduceti scriptul sau folositi fila de jocuri din stanga';
-      _G.fluxus_ui_values["execute_from_textbox"] = 'Executati din Textbox';
       _G.fluxus_ui_values["execute_from_clipboard"] = 'Executati din Clipboard';
       _G.fluxus_ui_values["credits"] = 'Fluxus Android facut de:<br/>- ShowerHeadFD<br/>- Rev<br/>- YieldingExploiter<br/><br/><i>Fila scripturi oferita de Scriptblox.com</i><br/>Descoperiti mai multe produse la <i>flux.li</i>';
 
@@ -2520,20 +2390,12 @@ if result then
       _G.fluxus_ui_values["tabimages"] = 'Afisati imaginile filelor';
       _G.fluxus_ui_values["noautoexec"] = 'Ignora Autoexec';
       _G.fluxus_ui_values["clearautoexec"] = 'Sterge Autoexec';
-      _G.fluxus_ui_values["fastanim"] = 'Animatii rapide';
       _G.fluxus_ui_values["noanim"] = 'Fara animatii';
       _G.fluxus_ui_values["scripthistory"] = 'Istoricul scripturilor';
       _G.fluxus_ui_values["purchaseprotections"] = 'Comutare protecții de achiziție';
     elseif code == "DE" then
-      _G.fluxus_ui_values["key_instructions"] = 'Willkommen bei Fluxus Andriod!<br/>Bitte klick auf \'SchlÃ¼ssel bekommen\' um den SchlÃ¼ssel zu bekommen.<br/>Wenn du den SchlÃ¼ssel hast, kopiere dein SchlÃ¼ssel in das KÃ¤stchen, dann klick auf \'SchlÃ¼ssel Ã¼berprÃ¼fen\'';
-      _G.fluxus_ui_values["key_paste_key_here"] = 'SchlÃ¼ssel hier reinkopieren';
-      _G.fluxus_ui_values["key_get_key"] = 'SchlÃ¼ssel bekommen';
-      _G.fluxus_ui_values["key_check_key"] = 'SchlÃ¼ssel Ã¼berprÃ¼fen';
-      _G.fluxus_ui_values["key_copied"] = 'Willkommen bei Fluxus Andriod!<br/>Der Link wurde in deine Zwischenablage kopiert - Bitte Ã¶ffne den link im Browser.<br/>Brauchst du hilfe? Werde jetzt Mitglied discord.gg/';
         
       _G.fluxus_ui_values["welcome_text"] = '<font size="24">Hallo und Willkommen bei Fluxus Adroid!</font><br/>Gebe dein Skript ein oder verwenden die Registerkarte auf der linken Seite';
-      _G.fluxus_ui_values["execute_from_textbox"] = 'AusfÃ¼hren aus der Textbox';
-      _G.fluxus_ui_values["execute_from_clipboard"] = 'AusfÃ¼hren von der Textbox';
       _G.fluxus_ui_values["credits"] = 'Fluxus Andriod erstellt von:<br/>- ShowerHeadFD<br/>- Rev<br/>- YieldingExploiter<br/><br/><i>Scripts Registerkarte powered by Scriptblox.com</i><br/>Entdecke mehr Produkte bei <i>flux.li</i>';
         
       _G.fluxus_ui_values["submit_query"] = 'Einreichen';
@@ -2622,7 +2484,6 @@ pcall(function()
       local clr = json_data["tabs_color"];
       
       if(clr:find("#")) then
-        Global_Tabs_Color = hex2rgb(clr)
       end
     end
 
@@ -2649,7 +2510,6 @@ local function CreateInc(name, class)
     return element
 end
 
-local FluxusAndroidUI = CreateInc("FluxusAndroidUI", "ScreenGui")
 local Container = CreateInc("Container", "Frame")
 local Loader = CreateInc("Loader", "Frame")
 local UIAspectRatioConstraint = CreateInc("UIAspectRatioConstraint", "UIAspectRatioConstraint")
@@ -2658,7 +2518,6 @@ local UICorner = CreateInc("UICorner", "UICorner")
 local UICorner_2 = CreateInc("UICorner_2", "UICorner")
 local Icon = CreateInc("Icon", "ImageLabel")
 local UIAspectRatioConstraint_2 = CreateInc("UIAspectRatioConstraint_2", "UIAspectRatioConstraint")
-local Key = CreateInc("Key", "Frame")
 local UIAspectRatioConstraint_3 = CreateInc("UIAspectRatioConstraint_3", "UIAspectRatioConstraint")
 local Border_2 = CreateInc("Border_2", "Frame")
 local UICorner_3 = CreateInc("UICorner_3", "UICorner")
@@ -2667,16 +2526,12 @@ local Icon_2 = CreateInc("Icon_2", "ImageLabel")
 local UIAspectRatioConstraint_4 = CreateInc("UIAspectRatioConstraint_4", "UIAspectRatioConstraint")
 local Container_2 = CreateInc("Container_2", "Frame")
 local UICorner_5 = CreateInc("UICorner_5", "UICorner")
-local CheckKey = CreateInc("CheckKey", "TextButton")
 local UICorner_6 = CreateInc("UICorner_6", "UICorner")
 local TextLabel = CreateInc("TextLabel", "TextLabel")
-local GetKey = CreateInc("GetKey", "TextButton")
 local UICorner_7 = CreateInc("UICorner_7", "UICorner")
 local TextLabel_2 = CreateInc("TextLabel_2", "TextLabel")
-local KeyContainer = CreateInc("KeyContainer", "TextLabel")
 local UICorner_8 = CreateInc("UICorner_8", "UICorner")
 local Instructions = CreateInc("Instructions", "TextLabel")
-local KeyBox = CreateInc("KeyBox", "TextBox")
 local minimizeContainer = CreateInc("minimizeContainer", "Frame")
 local UICorner_9 = CreateInc("UICorner_9", "UICorner")
 local _1Minimize = CreateInc("_1Minimize", "ImageButton")
@@ -2690,7 +2545,6 @@ local MainUI = CreateInc("MainUI", "ImageLabel")
 local Border_4 = CreateInc("Border_4", "Frame")
 local UICorner_12 = CreateInc("UICorner_12", "UICorner")
 local UICorner_13 = CreateInc("UICorner_13", "UICorner")
-local Tabs = CreateInc("Tabs", "Frame")
 local Scroller = CreateInc("Scroller", "ScrollingFrame")
 local UIListLayout = CreateInc("UIListLayout", "UIListLayout")
 local Btn = CreateInc("Btn", "ImageButton")
@@ -2735,7 +2589,6 @@ local UIAspectRatioConstraint_12 = CreateInc("UIAspectRatioConstraint_12", "UIAs
 local UITextSizeConstraint_6 = CreateInc("UITextSizeConstraint_6", "UITextSizeConstraint")
 local UICorner_21 = CreateInc("UICorner_21", "UICorner")
 local Label_3 = CreateInc("Label_3", "TextLabel")
-local Textbox = CreateInc("Textbox", "Frame")
 local TextBox = CreateInc("TextBox", "TextBox")
 local UICorner_22 = CreateInc("UICorner_22", "UICorner")
 local TextBoxMultiLine = CreateInc("TextBoxMultiLine", "Frame")
@@ -2762,7 +2615,6 @@ local ActiveButton_3 = CreateInc("ActiveButton_3", "TextButton")
 local UITextSizeConstraint_9 = CreateInc("UITextSizeConstraint_9", "UITextSizeConstraint")
 local UICorner_29 = CreateInc("UICorner_29", "UICorner")
 local TextLabel_7 = CreateInc("TextLabel_7", "TextLabel")
-local ToggleBtn = CreateInc("ToggleBtn", "TextButton")
 local ClickHandler = CreateInc("ClickHandler", "TextButton")
 local Border_5 = CreateInc("Border_5", "Frame")
 local Icon_3 = CreateInc("Icon_3", "ImageButton")
@@ -2774,11 +2626,8 @@ local UICorner_31 = CreateInc("UICorner_31", "UICorner")
 
 --Properties:
 
-FluxusAndroidUI.Name = 'FluxusAndroidUI'
-FluxusAndroidUI.Parent = rtContainer
 
 Container.Name = 'Container'
-Container.Parent = FluxusAndroidUI
 Container.BackgroundColor3 = Global_Editor_Color
 Container.BackgroundTransparency = 1.000
 Container.Size = UDim2.new(1, 0, 1, 0)
@@ -2820,21 +2669,10 @@ Icon.Image = a['rbxassetid://11434416211']
 
 UIAspectRatioConstraint_2.Parent = Icon
 
-Key.Name = 'Key'
-Key.Parent = Container
-Key.AnchorPoint = Vector2.new(0.5, 0.5)
-Key.BackgroundColor3 = Color3.fromRGB(36, 39, 58)
-Key.BorderColor3 = Color3.fromRGB(24, 25, 38)
-Key.BorderSizePixel = 0
-Key.Position = UDim2.new(0.5, 0, 0.5, 0)
-Key.Size = UDim2.new(0.97299999, 0, 0.660000026, 0)
-Key.Visible = false
 
-UIAspectRatioConstraint_3.Parent = Key
 UIAspectRatioConstraint_3.AspectRatio = 2.250
 
 Border_2.Name = 'Border'
-Border_2.Parent = Key
 Border_2.AnchorPoint = Vector2.new(0.5, 0.5)
 Border_2.BackgroundColor3 = Color3.fromRGB(30, 32, 48)
 Border_2.BorderSizePixel = 0
@@ -2846,10 +2684,8 @@ UICorner_3.CornerRadius = UDim.new(0, 20)
 UICorner_3.Parent = Border_2
 
 UICorner_4.CornerRadius = UDim.new(0, 16)
-UICorner_4.Parent = Key
 
 Icon_2.Name = 'Icon'
-Icon_2.Parent = Key
 Icon_2.AnchorPoint = Vector2.new(0.5, 0.5)
 Icon_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 Icon_2.BackgroundTransparency = 1.000
@@ -2860,7 +2696,6 @@ Icon_2.Image = a['rbxassetid://11434416211']
 UIAspectRatioConstraint_4.Parent = Icon_2
 
 Container_2.Name = 'Container'
-Container_2.Parent = Key
 Container_2.AnchorPoint = Vector2.new(0, 0.5)
 Container_2.BackgroundColor3 = Global_Editor_Color
 Container_2.Position = UDim2.new(0.25999999, 0, 0.5, 0)
@@ -2869,108 +2704,50 @@ Container_2.Size = UDim2.new(0.714599609, 0, 0.877767384, 0)
 UICorner_5.CornerRadius = UDim.new(0, 20)
 UICorner_5.Parent = Container_2
 
-CheckKey.Name = 'CheckKey'
-CheckKey.Parent = Container_2
-CheckKey.AnchorPoint = Vector2.new(1, 1)
-CheckKey.BackgroundColor3 = Global_Button_Color
-CheckKey.Position = UDim2.new(1, -8, 1.00000012, -8)
-CheckKey.Size = UDim2.new(0.421657592, 0, 0.245564342, 0)
-CheckKey.AutoButtonColor = false
-CheckKey.Font = Enum.Font.SourceSans
-CheckKey.Text = ''
-CheckKey.TextColor3 = Global_Text_Color
-CheckKey.TextSize = 14.000
 
 UICorner_6.CornerRadius = UDim.new(0, 16)
-UICorner_6.Parent = CheckKey
 
-TextLabel.Parent = CheckKey
 TextLabel.AnchorPoint = Vector2.new(0.5, 0.5)
 TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 TextLabel.BackgroundTransparency = 1.000
 TextLabel.Position = UDim2.new(0.5, 0, 0.5, 0)
 TextLabel.Size = UDim2.new(1, 0, 0.699999988, 0)
 TextLabel.Font = Enum.Font.SourceSans
-TextLabel.Text = _G.fluxus_ui_values["key_check_key"]
 TextLabel.TextColor3 = Global_Text_Color
 TextLabel.TextScaled = true
 TextLabel.TextSize = 14.000
 TextLabel.TextWrapped = true
 
-GetKey.Name = 'GetKey'
-GetKey.Parent = Container_2
-GetKey.AnchorPoint = Vector2.new(0, 1)
-GetKey.BackgroundColor3 = Color3.fromRGB(30, 32, 48)
-GetKey.Position = UDim2.new(0, 8, 1, -8)
-GetKey.Size = UDim2.new(0.421657592, 0, 0.245564342, 0)
-GetKey.AutoButtonColor = false
-GetKey.Font = Enum.Font.SourceSans
-GetKey.Text = ' '
-GetKey.TextColor3 = Global_Text_Color
-GetKey.TextSize = 14.000
 
 UICorner_7.CornerRadius = UDim.new(0, 16)
-UICorner_7.Parent = GetKey
 
-TextLabel_2.Parent = GetKey
 TextLabel_2.AnchorPoint = Vector2.new(0.5, 0.5)
 TextLabel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 TextLabel_2.BackgroundTransparency = 1.000
 TextLabel_2.Position = UDim2.new(0.5, 0, 0.5, 0)
 TextLabel_2.Size = UDim2.new(1, 0, 0.699999988, 0)
 TextLabel_2.Font = Enum.Font.SourceSans
-TextLabel_2.Text = _G.fluxus_ui_values["key_get_key"]
 TextLabel_2.TextColor3 = Global_Text_Color
 TextLabel_2.TextScaled = true
 TextLabel_2.TextSize = 14.000
 TextLabel_2.TextWrapped = true
 
-KeyContainer.Name = 'KeyContainer'
-KeyContainer.Parent = Container_2
-KeyContainer.AnchorPoint = Vector2.new(0.5, 0)
-KeyContainer.BackgroundColor3 = Color3.fromRGB(36, 39, 58)
-KeyContainer.Position = UDim2.new(0.5, 0, 0, 8)
-KeyContainer.Size = UDim2.new(1, -16, 0.754000008, -24)
-KeyContainer.Font = Enum.Font.SourceSans
-KeyContainer.Text = ''
-KeyContainer.TextColor3 = Global_Text_Color
-KeyContainer.TextSize = 16.000
-KeyContainer.TextWrapped = true
-KeyContainer.TextYAlignment = Enum.TextYAlignment.Top
 
 UICorner_8.CornerRadius = UDim.new(0, 16)
-UICorner_8.Parent = KeyContainer
 
 Instructions.Name = 'Instructions'
-Instructions.Parent = KeyContainer
 Instructions.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 Instructions.BackgroundTransparency = 1.000
 Instructions.Position = UDim2.new(0.0214072056, 0, 0.0587453023, 0)
 Instructions.Size = UDim2.new(0.952989757, 0, 0.555652499, 0)
 Instructions.Font = Enum.Font.SourceSans
-Instructions.Text =_G.fluxus_ui_values["key_instructions"]
 Instructions.TextColor3 = Global_Text_Color
 Instructions.TextScaled = true
 Instructions.TextSize = 14.000
 Instructions.TextWrapped = true
 
-KeyBox.Name = 'KeyBox'
-KeyBox.Parent = KeyContainer
-KeyBox.AnchorPoint = Vector2.new(0.5, 1)
-KeyBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-KeyBox.BackgroundTransparency = 1.000
-KeyBox.Position = UDim2.new(0.50000006, 0, 0.94668895, 0)
-KeyBox.Size = UDim2.new(1.00000024, 0, 0.257028431, 0)
-KeyBox.Font = Enum.Font.SourceSans
-KeyBox.PlaceholderText = _G.fluxus_ui_values["key_paste_key_here"]
-KeyBox.Text = ''
-KeyBox.TextColor3 = Global_Text_Color
-KeyBox.TextScaled = true
-KeyBox.TextSize = 14.000
-KeyBox.TextWrapped = true
 
 minimizeContainer.Name = 'minimizeContainer'
-minimizeContainer.Parent = Key
 minimizeContainer.AnchorPoint = Vector2.new(0.5, 0)
 minimizeContainer.BackgroundColor3 = Color3.fromRGB(30, 32, 48)
 minimizeContainer.BorderSizePixel = 0
@@ -3054,15 +2831,8 @@ UICorner_12.Parent = Border_4
 UICorner_13.CornerRadius = UDim.new(0, 16)
 UICorner_13.Parent = MainUI
 
-Tabs.Name = 'Tabs'
-Tabs.Parent = MainUI
-Tabs.BackgroundColor3 = Global_Tabs_Color
-Tabs.BorderSizePixel = 0
-Tabs.ClipsDescendants = true
-Tabs.Size = UDim2.new(0, 64, 1, 0)
 
 Scroller.Name = 'Scroller'
-Scroller.Parent = Tabs
 Scroller.Active = true
 Scroller.AnchorPoint = Vector2.new(0.5, 0.5)
 Scroller.BackgroundColor3 = Color3.fromRGB(30, 32, 48)
@@ -3092,10 +2862,8 @@ UICorner_14.CornerRadius = UDim.new(0, 16)
 UICorner_14.Parent = Btn
 
 UICorner_15.CornerRadius = UDim.new(0, 16)
-UICorner_15.Parent = Tabs
 
 _1Minimize_2.Name = '1Minimize'
-_1Minimize_2.Parent = Tabs
 _1Minimize_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 _1Minimize_2.BackgroundTransparency = 1.000
 _1Minimize_2.BorderSizePixel = 0
@@ -3104,7 +2872,6 @@ _1Minimize_2.Image = a['rbxassetid://11447435879']
 
 UIAspectRatioConstraint_8.Parent = _1Minimize_2
 
-UIListLayout_2.Parent = Tabs
 UIListLayout_2.Padding = UDim.new(0, 6)
 
 Content.Name = 'Content'
@@ -3363,13 +3130,7 @@ Label_3.TextSize = 14.000
 Label_3.TextWrapped = true
 Label_3.TextXAlignment = Enum.TextXAlignment.Left
 
-Textbox.Name = 'Textbox'
-Textbox.Parent = Content
-Textbox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Textbox.BackgroundTransparency = 1.000
-Textbox.Size = UDim2.new(0.995999992, 0, 0, 30)
 
-TextBox.Parent = Textbox
 TextBox.AnchorPoint = Vector2.new(1, 0.5)
 TextBox.BackgroundColor3 = Global_Editor_Color
 TextBox.Position = UDim2.new(0.997991979, 0, 0.5, 0)
@@ -3583,19 +3344,9 @@ TextLabel_7.TextScaled = true
 TextLabel_7.TextSize = 14.000
 TextLabel_7.TextWrapped = true
 
-ToggleBtn.Name = 'ToggleBtn'
-ToggleBtn.Parent = Container
-ToggleBtn.BackgroundColor3 = Color3.fromRGB(36, 39, 58)
-ToggleBtn.BorderColor3 = Color3.fromRGB(24, 25, 38)
-ToggleBtn.BorderSizePixel = 0
-ToggleBtn.Position = UDim2.new(0, 16, 0, 16)
-ToggleBtn.Size = UDim2.new(0.0719999969, 0, 0, 32)
-ToggleBtn.Visible = false
 
-UIAspectRatioConstraint_13.Parent = ToggleBtn
 
 Border_5.Name = 'Border'
-Border_5.Parent = ToggleBtn
 Border_5.AnchorPoint = Vector2.new(0.5, 0.5)
 Border_5.BackgroundColor3 = Color3.fromRGB(30, 32, 48)
 Border_5.BorderSizePixel = 0
@@ -3607,10 +3358,8 @@ UICorner_30.CornerRadius = UDim.new(0, 20)
 UICorner_30.Parent = Border_5
 
 UICorner_31.CornerRadius = UDim.new(0, 16)
-UICorner_31.Parent = ToggleBtn
 
 Icon_3.Name = 'Icon'
-Icon_3.Parent = ToggleBtn
 Icon_3.AnchorPoint = Vector2.new(0.5, 0.5)
 Icon_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 Icon_3.BackgroundTransparency = 1.000
@@ -3621,7 +3370,6 @@ Icon_3.Image = 'rbxassetid://13327193518'
 UIAspectRatioConstraint_14.Parent = Icon_3
 
 ClickHandler.Name = 'ClickHandler'
-ClickHandler.Parent = ToggleBtn
 ClickHandler.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 ClickHandler.BackgroundTransparency = 0.990
 ClickHandler.Size = UDim2.new(1, 0, 1, 0)
@@ -3686,7 +3434,6 @@ InternalAPI.CreateUI = function()
   end
   InternalAPI.BaseContent = UIFrames.MainUI.Content:Clone()
   UIFrames.MainUI.Content:Destroy()
-  InternalAPI.SidebarScroller = UIFrames.MainUI.Tabs.Scroller
   InternalAPI.SidebarBtn = InternalAPI.SidebarScroller.Btn:Clone()
   InternalAPI.SidebarScroller.Btn:Destroy()
   game:GetService('RunService').RenderStepped:Connect(function()
@@ -3713,19 +3460,14 @@ InternalAPI.CreateUI = function()
   t:Play()
   t.Completed:Wait()
   InternalAPI.UIFrames.TransitionUI.Size = UDim2.fromOffset(UIFrames.Loader.AbsoluteSize.X, UIFrames.Loader.AbsoluteSize.Y)
-  InternalAPI.UIFrames.ToggleBtn.ClickHandler.MouseButton1Click:Connect(function()
     API:Unminimize()
   end)
-  Dragger(InternalAPI.UIFrames.ToggleBtn, InternalAPI.UIFrames.ToggleBtn.ClickHandler)
   -- Prepare final UI in new thread
   task.spawn(function()
-    InternalAPI.UIFrames.MainUI.Tabs:FindFirstChild('1Minimize').MouseButton1Click:Connect(function()
       API:Minimize()
     end)
-    InternalAPI.UIFrames.Key.minimizeContainer:FindFirstChild('1Minimize').MouseButton1Click:Connect(function()
       API:Minimize()
     end)
-    InternalAPI.UIFrames.Key.minimizeContainer.AnchorPoint = Vector2.new(1, 0)
   end)
 end
 
@@ -3789,48 +3531,29 @@ InternalAPI.PrepareTransition = function(oldName)
   InternalAPI.UIFrames.TransitionUI.AnchorPoint = oldFrame.AnchorPoint
 end
 
---- Register Get Key Click
-InternalAPI.RegisterGetKeyClick = function(cb)
-  InternalAPI.UIFrames.Key.Container.GetKey.MouseButton1Click:Connect(cb)
 end
 
---- Register Check Key Click
-InternalAPI.RegisterValidateKeyClick = function(cb)
-  InternalAPI.UIFrames.Key.Container.CheckKey.MouseButton1Click:Connect(function()
-    cb(InternalAPI.UIFrames.Key.Container.KeyContainer.KeyBox.Text)
   end)
 end
 
 --- (Un)Minimize Functions
-local unminimizeTransitionUIPoint = 'Key'
-local keyMinimizeTween = TweenInfo.new(cfg:get 'fastanim' and 0.2 or 1, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut)
 InternalAPI.KSHideBtn = function()
-  local keyMinimizeItem = InternalAPI.UIFrames.Key.minimizeContainer
-  if unminimizeTransitionUIPoint == 'Key' and not cfg:get 'noanim' then
-    local ts = TweenService:Create(keyMinimizeItem, keyMinimizeTween, { AnchorPoint = Vector2.new(1, 0) })
     ts:Play()
     ts.Completed:Wait()
   else
-    keyMinimizeItem.AnchorPoint = Vector2.new(1, 0)
   end
 end
 InternalAPI.KSShowBtn = function()
-  local keyMinimizeItem = InternalAPI.UIFrames.Key.minimizeContainer
-  if unminimizeTransitionUIPoint == 'Key' and not cfg:get 'noanim' then
-    local ts = TweenService:Create(keyMinimizeItem, keyMinimizeTween, { AnchorPoint = Vector2.new(0.5, 0) })
     ts:Play()
     ts.Completed:Wait()
   else
-    keyMinimizeItem.AnchorPoint = Vector2.new(0.5, 0)
   end
 end
 API.Minimize = function()
   InternalAPI.KSHideBtn()
   InternalAPI.PrepareTransition(unminimizeTransitionUIPoint)
-  InternalAPI.TransitionToUIFrame 'ToggleBtn'
 end
 API.Unminimize = function()
-  InternalAPI.PrepareTransition 'ToggleBtn'
   InternalAPI.TransitionToUIFrame(unminimizeTransitionUIPoint)
   InternalAPI.KSShowBtn()
 end
@@ -4094,7 +3817,6 @@ return function(btn, ...)
     end
   end
 
-  -- prepare & return api
   local API = {}
 
   API.Clicked = ClickedRE.Event
@@ -4187,7 +3909,6 @@ return function(check, text, default)
     check.Unchecked.Visible = not API.Status
     return self
   end
-  API.Toggle = function(self)
     return self:Set(not self.Status)
   end
   API.Set = function(self, val)
@@ -4210,7 +3931,6 @@ return function(check, text, default)
   API:RawUpdate()
 
   local t = function()
-    API:Toggle()
   end
   check.Checked.MouseButton1Click:Connect(t)
   check.Unchecked.MouseButton1Click:Connect(t)
@@ -4244,7 +3964,6 @@ return function(item)
     end)
   end)
   item.Size = UDim2.new(item.Size.X, UDim.new(0, item.Parent.Parent.AbsoluteSize.Y - 72))
-  local API = {} -- no api, fuck off | this is done entirely in the component
   return API
 end
 
@@ -4297,7 +4016,6 @@ return function(item, cb)
   item.ActiveButton.MouseButton1Click:Connect(function()
     cb(item.TextBox.Text)
   end)
-  local API = {} -- no api, fuck off | this is done entirely in the component
   return API
 end
 
@@ -4384,13 +4102,9 @@ modules['lib/ui/component/Text.lua'].isCached = false;
 
 ----
 
-modules['lib/ui/component/Textbox.lua'] = {};
-modules['lib/ui/component/Textbox.lua'].load = function()
 return require 'lib/ui/component/TextBoxMultiLine' -- identical
 
 end;
-modules['lib/ui/component/Textbox.lua'].cache = null;
-modules['lib/ui/component/Textbox.lua'].isCached = false;
 
 ----
 
@@ -4441,9 +4155,6 @@ modules['index'] = modules['index.lua'];
 
 ----
 
-modules['auth/HandleKeyedAuthentication'] = modules['auth/HandleKeyedAuthentication.lua'];
-modules['auth\\HandleKeyedAuthentication.lua'] = modules['auth/HandleKeyedAuthentication.lua'];
-modules['auth\\HandleKeyedAuthentication'] = modules['auth/HandleKeyedAuthentication.lua'];
 
 ----
 
@@ -4675,9 +4386,6 @@ modules['lib\\ui\\component\\Text'] = modules['lib/ui/component/Text.lua'];
 
 ----
 
-modules['lib/ui/component/Textbox'] = modules['lib/ui/component/Textbox.lua'];
-modules['lib\\ui\\component\\Textbox.lua'] = modules['lib/ui/component/Textbox.lua'];
-modules['lib\\ui\\component\\Textbox'] = modules['lib/ui/component/Textbox.lua'];
 
 ----
 
